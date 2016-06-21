@@ -1,0 +1,51 @@
+# To get started with security, check out the documentation:
+# http://symfony.com/doc/current/book/security.html
+security:
+    access_control:
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/, roles: ROLE_ADMIN }
+
+    # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
+    encoders:
+        Symfony\Component\Security\Core\User\User:
+            algorithm: bcrypt
+            cost: 12
+
+    providers:
+#        db_user_provider:
+#            entity:
+#                class: "AppBundle:Manager"
+#                # if you're using multiple entity managers
+#                # manager_name: customer
+        in_memory:
+            memory:
+                users:
+                    ryan:
+                        password: $2y$12$rKYXk9nuQUIcCDbN1/KoOu1rMELrAa1jICOpFSL8zunybkw33A/6e
+                        roles: 'ROLE_USER'
+                    admin:
+                        password: $2y$12$rKYXk9nuQUIcCDbN1/KoOu1rMELrAa1jICOpFSL8zunybkw33A/6e
+                        roles: ['ROLE_ADMIN','ROLE_USER']
+
+
+    firewalls:
+        login_firewall:
+            pattern:   ^/login$
+            anonymous: ~
+        # disables authentication for assets and the profiler, adapt it according to your needs
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        main:
+            pattern:    ^/
+            #provider: db_user_provider
+            #http_basic: ~
+            logout:
+                path:   /logout
+                target: login
+            form_login:
+                default_target_path: /
+                login_path: login
+                check_path: login
+            # http://symfony.com/doc/current/cookbook/security/form_login_setup.html

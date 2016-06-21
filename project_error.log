@@ -1,0 +1,1 @@
+2016/05/31 10:24:17 [crit] 9258#0: *1 connect() to unix:/var/run/php5-fpm.sock failed (2: No such file or directory) while connecting to upstream, client: 192.168.22.1, server: crm.lc, request: "GET / HTTP/1.1", upstream: "fastcgi://unix:/var/run/php5-fpm.sock:", host: "crm.lc"
